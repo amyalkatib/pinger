@@ -100,7 +100,7 @@ def ping(host, timeout=1):
     # Calculate vars values and return them
     
     
-    delays []
+    delays[]
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
