@@ -13,10 +13,11 @@ def checksum(str_):
     csum = 0
     countTo = (len(str_) // 2) * 2
 
-    for count in range(0, countTo, 2):
-        thisVal = str_[count+1] * 256 + str_[count]
-        csum = csum + thisVal
-        csum = csum & 0xffffffff
+    while count < countTo:
+        thisVal = (string[count + 1]) * 256 + (string[count])
+        csum += thisVal
+        csum &= 0xffffffff
+        count += 2
 
     if countTo < len(str_):
         csum = csum + str_[-1]
