@@ -95,8 +95,8 @@ def doOnePing(destAddr, timeout):
 def ping(host, timeout=1):
     # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
     dest = gethostbyname(host)
-    print("Pinging " + dest + " using Python:")
-    print("")
+    #print("Pinging " + dest + " using Python:")
+    #print("")
     # Calculate vars values and return them
     
     
@@ -105,7 +105,7 @@ def ping(host, timeout=1):
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
         delays.append(delay)
-        print(delay)
+        #print(delay)
         time.sleep(1)  # one second
     packet_min=delays[0]
     packet_max=delays[0]
