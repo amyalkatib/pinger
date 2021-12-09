@@ -5,6 +5,7 @@ import struct
 import time
 import select
 import binascii
+import statistics
 ICMP_ECHO_REQUEST = 8
 
 def checksum(str_):
