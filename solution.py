@@ -110,7 +110,7 @@ def ping(host, timeout=1):
     packet_min=delays[0]
     packet_max=delays[0]
     sum = 0
-     for i in range(0,4)
+    for i in range(0,4)
         if delays[i] < packet_min:
             packet_min = delays[i]
         if delays[i] > packet_max:
