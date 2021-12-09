@@ -5,7 +5,7 @@ import struct
 import time
 import select
 import binascii
-import statistics
+from statistics import stdev
 ICMP_ECHO_REQUEST = 8
 
 def checksum(str_):
@@ -98,20 +98,32 @@ def ping(host, timeout=1):
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    packet_min=0
-    packet_avg=0.0
-    packet_max=0.0
-    stdev_var= stdev(packet_min, packet_avg, packet_max)
     
     
-    vars = [str(round(packet_min,2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+    delays []
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
+        delays.append(delay)
         print(delay)
         time.sleep(1)  # one second
-
+    packet_min=delays[0]
+    packet_max=delays[0]
+    sum = 0
+     for i in range(0,4)
+        if delays[i] < packet_min:
+            packet_min = delays[i]
+        if delays[i] > packet_max:
+            packet_max = delays[i]
+        sum = sum + delays[i]
+        
+    packet_avg= sum / 4
+    
+    stdev_var= stdev(packet_min, packet_avg, packet_max)
+    
+    vars = [str(round(packet_min,2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     return vars
 
 if __name__ == '__main__':
-    ping("google.co.il")
+    
+    Ping("google.co.il", 1)
