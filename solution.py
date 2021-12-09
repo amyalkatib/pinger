@@ -107,6 +107,7 @@ def ping(host, timeout=1):
         delays.append(delay)
         #print(delay)
         time.sleep(1)  # one second
+        i += 1
     packet_min=delays[0]
     packet_max=delays[0]
     sum = 0
