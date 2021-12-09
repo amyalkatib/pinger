@@ -101,6 +101,7 @@ def ping(host, timeout=1):
     packet_min=0
     packet_avg=0.0
     packet_max=0.0
+    stdev_var= stdev(packet_min, packet_avg, packet_max)
     
     
     vars = [str(round(packet_min,2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
