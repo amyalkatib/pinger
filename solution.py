@@ -128,3 +128,4 @@ def ping(host, timeout=1):
 if __name__ == '__main__':
     
     Ping("google.co.il")
+sys.exit(0)
