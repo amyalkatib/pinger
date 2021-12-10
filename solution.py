@@ -1,5 +1,5 @@
 from socket import *
-import sys
+from sys import *
 import os
 import struct
 import time
@@ -129,4 +129,4 @@ def ping(host, timeout=1):
 if __name__ == '__main__':
     
     ping("google.co.il")
-sys.exit(0)
+exit(0)
