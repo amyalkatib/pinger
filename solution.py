@@ -1,6 +1,5 @@
 from socket import *
 import os
-import sys
 import struct
 import time
 import select
