@@ -11,29 +11,28 @@ from statistics import stdev
 ICMP_ECHO_REQUEST = 8
 
 
-def checksum(str_):
-    # In this function we make the checksum of our packet
-    str_ = bytearray(str_)
-    csum = 0
-    countTo = (len(str_) // 2) * 2
+def checksum(string):
+   csum = 0
+   countTo = (len(string) // 2) * 2
+   count = 0
 
-    count = 0
-    while count < countTo:
-        thisVal = ((count + 1) * 256 + count)
-        csum += thisVal
-        csum &= 0xffffffff
-        count += 2
+   while count < countTo:
+       thisVal = (string[count + 1]) * 256 + (string[count])
+       csum += thisVal
+       csum &= 0xffffffff
+       count += 2
 
-    if countTo < len(str_):
-        csum = csum + str_[-1]
-        csum = csum & 0xffffffff
+   if countTo < len(string):
+       csum += (string[len(string) - 1])
+       csum &= 0xffffffff
 
-    csum = (csum >> 16) + (csum & 0xffff)
-    csum = csum + (csum >> 16)
-    answer = ~csum
-    answer = answer & 0xffff
-    answer = answer >> 8 | (answer << 8 & 0xff00)
-    return answer
+   csum = (csum >> 16) + (csum & 0xffff)
+   csum = csum + (csum >> 16)
+   answer = ~csum
+   answer = answer & 0xffff
+   answer = answer >> 8 | (answer << 8 & 0xff00)
+   return answer
+
 
 
 def receiveOnePing(mySocket, ID, timeout, destAddr):
@@ -90,7 +89,7 @@ def sendOnePing(mySocket, destAddr, ID):
 def doOnePing(destAddr, timeout):
     icmp = getprotobyname("icmp")
     # Create Socket here
-    mySocket = socket(AF_INET, SOCK_DGRAM, icmp)
+    mySocket = socket(AF_INET, SOCK_RAW, icmp)
 
     myID = os.getpid() & 0xFFFF  # Return the current process i
     sendOnePing(mySocket, destAddr, myID)
@@ -115,8 +114,8 @@ def ping(host, timeout=1):
         #print(delay)
         time.sleep(1)  # one second
         i += 1
-    packet_min = delays[0]
-    packet_max = delays[0]
+    packet_min = (delays)
+    packet_max = (delays)
     sum = 0
     for i in range(0, 4):
         if delays[i] < packet_min:
@@ -129,7 +128,7 @@ def ping(host, timeout=1):
 
     packet_avg = sum / 4
 
-    stdev_var = stdev(packet_min, packet_avg)
+    stdev_var = stdev(delays)
 
     vars = [(round(packet_min, 2)), (round(packet_avg, 2)), (round(packet_max, 2)), (round(stdev(stdev_var), 2))]
     return vars
