@@ -111,12 +111,7 @@ def ping(host, timeout=1):
     # Calculate vars values and return them
     #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
-    i = 0
-    for i in range(0, 4):
-        delay = doOnePing(dest, timeout)
-        #print(delay)
-        time.sleep(1)
-        i = i + 1# one second
+    # one second
     delays = []
     # Send ping requests to a server separated by approximately one second
     for i in range(0, 4):
