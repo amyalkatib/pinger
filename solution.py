@@ -114,22 +114,22 @@ def ping(host, timeout=1):
     # one second
     delays = []
     for i in range(0,4):
-        #delay = doOnePing(dest, timeout)
+        delay = doOnePing(dest, timeout)
         #delays[i] = delay
-        delays.append([i])
+        delays.append(int(delay)
         # print(delay)
         time.sleep(1)  # one second
     
-    packet_min = (delays[1])
-    packet_max = (delays[2])
+    packet_min = (delay)
+    packet_max = (delay)
     sum = 0
    
     for i in range(0, 4):
-        if  delays[i] < packet_min:
+        if  delays[i] < int(packet_min):
             packet_min = delays[i]
             sum = sum + packet_min
           
-        if  delays[i] > packet_max:
+        if  delays[i] > int(packet_max):
             packet_max = delays[i]
             sum = sum + packet_max
        
