@@ -127,11 +127,11 @@ def ping(host, timeout=1):
     packet_max = (delays)
     sum = 0
     for i in range(0, 4):
-        if float(delays[i]) < packet_min:
+        if (float(delays[i])) < packet_min:
             packet_min = delays[i]
             sum = sum + packet_min
             i = i + 1
-        if float(delays[i]) > packet_max:
+        if (float(delays[i])) > packet_max:
             packet_max = delays[i]
             sum = sum + packet_max
             i = i + 1
@@ -147,3 +147,4 @@ def ping(host, timeout=1):
 
 if __name__ == '__main__':
     ping("google.co.il")
+
