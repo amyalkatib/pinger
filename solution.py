@@ -23,7 +23,7 @@ def checksum(string):
         count += 2
 
     if countTo < len(string):
-        csum += (string[len(string) - 1])
+        csum += (len(string) - 1])
         csum &= 0xffffffff
 
     csum = (csum >> 16) + (csum & 0xffff)
