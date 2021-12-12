@@ -131,7 +131,7 @@ def ping(host, timeout=1):
             packet_min = delays[i]
             sum = sum + packet_min
             i = i + 1
-        if (float(delays[i])) > (float(packet_max):
+        if (float(delays[i])) > (float(packet_max)):
             packet_max = delays[i]
             sum = sum + packet_max
             i = i + 1
