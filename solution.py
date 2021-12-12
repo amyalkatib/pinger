@@ -120,7 +120,7 @@ def ping(host, timeout=1):
     # delays[i] = delay
         delays.append(delay)
     # print(delay)
-       time.sleep(1)  # one second
+        time.sleep(1)  # one second
 
 
     packet_min = delays[0]
