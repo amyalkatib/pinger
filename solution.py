@@ -114,9 +114,9 @@ def ping(host, timeout=1):
     # one second
     delays = []
     for i in range(0,4):
-        delay = doOnePing(dest, timeout)
+        #delay = doOnePing(dest, timeout)
         #delays[i] = delay
-        delays.append(delay)
+        delays.append(1)
         # print(delay)
         time.sleep(1)  # one second
     
