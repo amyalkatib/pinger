@@ -125,18 +125,18 @@ def ping(host, timeout=1):
 
     packet_min = delays[0]
     packet_max = delays[1]
-    sum = 0
+    #sum = 0
 
-    for i in range(0, 4):
-        if  delays[i] < packet_min:
-            packet_min = delays[i]
-            sum = sum + packet_min
+    #for i in range(0, 4):
+     #   if  delays[i] < packet_min:
+      #      packet_min = delays[i]
+       #     sum = sum + packet_min
 
-        if  delays[i] > packet_max:
-            packet_max = delays[i]
-            sum = sum + packet_max
+        #if  delays[i] > packet_max:
+         #   packet_max = delays[i]
+          #  sum = sum + packet_max
 
-    packet_avg = sum / 4
+    packet_avg = 4
 
     vars = stdev_var = stdev(delays)
 
