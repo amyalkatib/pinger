@@ -1,6 +1,6 @@
 from socket import *
 import os
-import sys
+#import sys
 import struct
 import time
 import select
@@ -115,7 +115,7 @@ def ping(host, timeout=1):
     delays = [1, 2, 3, 4]
 
     for i in range(0,4):
-        delay = int(doOnePing(dest, timeout))
+        delay = str(doOnePing(dest, timeout))
         
     # delays[i] = delay
     # delays.append(int(delay))
