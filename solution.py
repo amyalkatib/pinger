@@ -1,3 +1,4 @@
+
 from socket import *
 import os
 import sys
@@ -6,8 +7,11 @@ import time
 import select
 import binascii
 from statistics import stdev
+from array import array
 
-# Should use stdev
+
+
+
 
 ICMP_ECHO_REQUEST = 8
 
@@ -35,6 +39,7 @@ def checksum(string):
     return answer
 
 
+
 def receiveOnePing(mySocket, ID, timeout, destAddr):
     timeLeft = timeout
 
@@ -49,13 +54,18 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         recPacket, addr = mySocket.recvfrom(1024)
 
         # Fill in start
-        icmpHeader = recPacket[20:28]
-        icmpType, code, mychecksum, packetID, sequence = struct.unpack("bbHHh", icmpHeader)
+
         # Fetch the ICMP header from the IP packet
-        if icmpType != 8 and packetID == ID:
-            bytesInDouble = struct.calcsize("d")
-            timeSent = struct.unpack("d", recPacket[28:28 + bytesInDouble])[0]
-            return timeReceived
+
+        icmpHeader = recPacket[20:28]
+
+        icmptype, code, checksum, packetid, sequence = struct.unpack("bbHHh", icmpHeader)
+
+        if type != 8 and packetid == ID:
+            doublebytes = struct.calcsize("!d")
+            timeSent = struct.unpack("d", recPacket[28:28 + doublebytes])[0]
+            return (timeReceived - timeSent) *1000
+
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
         if timeLeft <= 0:
@@ -81,19 +91,21 @@ def sendOnePing(mySocket, destAddr, ID):
     else:
         myChecksum = htons(myChecksum)
 
+
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     packet = header + data
 
     mySocket.sendto(packet, (destAddr, 1))  # AF_INET address must be tuple, not str
 
+
     # Both LISTS and TUPLES consist of a number of objects
     # which can be referenced by their position number within the object.
-
 
 def doOnePing(destAddr, timeout):
     icmp = getprotobyname("icmp")
 
-    # SOCK_RAW is a powerful socket type. For more details:   #http://sockraw.org/papers/sock_raw
+
+    # SOCK_RAW is a powerful socket type. For more details:   http://sockraw.org/papers/sock_raw
     mySocket = socket(AF_INET, SOCK_RAW, icmp)
 
     myID = os.getpid() & 0xFFFF  # Return the current process i
@@ -109,41 +121,25 @@ def ping(host, timeout=1):
     # print("Pinging " + dest + " using Python:")
     # print("")
     # Calculate vars values and return them
-    #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+    # vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
-    # one second
-    delays = [1, 2, 3, 4]
-    delay = 0
-    for i in range(delays):
-        delay = str(doOnePing(dest, timeout))
-        #delay = delay + 1
-    # delays[i] = delay
-        delays.append(delay)
-    # print(delay)
+
+    packetDelay = array('d', [0.0,0.0,0.0,0.0])
+
+    for i in range(0,4):
+        delay = doOnePing(dest, timeout)
+        packetDelay[i] = delay
+        # print(delay)
         time.sleep(1)  # one second
 
-
-    packet_min = delays[0]
-    packet_max = delays[1]
-    sum = 0
-
-    for i in range(delays):
-        if  delays[i] < packet_min:
-            packet_min = delays[i]
-            sum = sum + packet_min
-
-        if  delays[i] > packet_max:
-            packet_max = delays[i]
-            sum = sum + packet_max
-
-    packet_avg = 4
-
-    vars = stdev_var = stdev(delays)
-
-    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)), str(round(stdev(stdev_var), 2))]
+    # Calculate vars for return
+    packet_min = min(packetDelay)
+    packet_avg = (sum(packetDelay) / len(packetDelay))
+    packet_max = max(timedelay)
+    stdev_var = stdev(packetDelay)
+    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev_var, 2))]
 
     return vars
 
 if __name__ == '__main__':
-    ping("google.co.il")
-
+    ping('www.google.com')
