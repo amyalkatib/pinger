@@ -135,7 +135,7 @@ def ping(host, timeout=1):
     # Calculate vars for return
     packet_min = min(packetDelay)
     packet_avg = (sum(packetDelay) / len(packetDelay))
-    packet_max = max(timedelay)
+    packet_max = max(packetDelay)
     stdev_var = stdev(packetDelay)
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev_var, 2))]
 
